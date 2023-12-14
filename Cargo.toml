@@ -1,0 +1,22 @@
+[package]
+name = "ms5637"
+description = "no-std I2C driver for the MS5637 temperature and pressure sensor."
+authors = ["decryphe"]
+repository = "https://github.com/decryphe/ms5637"
+keywords = ["i2c", "no-std", "ms5637", "temperature", "pressure"]
+categories = ["embedded", "hardware-support", "no-std", "no-std::no-alloc"]
+license = "MIT"
+version = "0.1.0"
+edition = "2021"
+# Because of optional dependencies:
+rust-version = "1.60"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embedded-hal = "^0.2.0"
+libm = { version = "^0.2.0", optional = true }
+
+[features]
+altitude-adjust = ["dep:libm"]
+second-order = []

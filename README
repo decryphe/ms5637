@@ -1,0 +1,28 @@
+# I2C-driver for MS5637
+
+Implements a driver for accessing an MS5637 temperature and pressure sensor.
+
+The library is built to work with [`embedded-hal`] and has been tested on an
+STM32L072 micro controller. The 1st-order temperature compensation is
+implemented as per the [datasheet definition][ms5637], and inspired by the
+implementation in the [Sparkfun MS5637 library][spk]. The 2nd-order temperature
+compensation is probably wrong and untested, but may be activated using the
+feature flag `second-order`. Additional height adjustment methods available in
+the [Sparkfun library][spk] were copied over for convenience and may be enabled
+using the `altitude-adjust` feature flag.
+
+[ms5637]: https://www.amsys.de/downloads/data/MS5637-30BA-AMSYS-datasheet.pdf
+[spk]:
+  https://github.com/sparkfun/SparkFun_MS5637_Arduino_Library/blob/main/src/SparkFun_MS5637_Arduino_Library.cpp
+
+# Usage
+
+Using the library is very easy, just provide something that can delay execution
+by a specific time, and a reference to the I2C bus itself:
+
+```
+let mut ms5637 = ms5637::MS5637::new(&mut syst_delay, &mut i2c_bus);
+let reading = ms5637.read_temperature_and_pressure_1st_order(&mut syst_delay, &mut i2c);
+```
+
+The library can be cooperatively used iwth other sensors on the same I2C-bus.
